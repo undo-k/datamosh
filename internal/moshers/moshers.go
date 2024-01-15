@@ -6,21 +6,21 @@ import (
 	"time"
 )
 
-func Decimate(data *[]byte, startIndex uint, endIndex uint) {
+func Decimate(data *[]byte, startIndex uint, endIndex uint, threshold float32) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	for idx := startIndex; idx < endIndex; idx++ {
-		if r.Float64()*1000 < 1.0 {
+		if r.Float32()*threshold < 1.0 {
 			b := uint8(r.Uint32())
 			(*data)[idx] = ((b ^ b) | (0x69 ^ b)) ^ uint8(r.Float32()*10)
 		}
 	}
 }
 
-func Quadratic(data *[]byte, startIndex uint, endIndex uint) {
+func Quadratic(data *[]byte, startIndex uint, endIndex uint, threshold float32) {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for idx := startIndex; idx < endIndex; idx++ {
-		if r.Float64()*1000 < 1.0 {
+		if r.Float32()*threshold < 1.0 {
 			yIndex := (idx * idx) + (uint((*data)[idx]) * idx) + uint((*data)[idx])
 			yIndex = yIndex % endIndex
 			if yIndex < startIndex {
