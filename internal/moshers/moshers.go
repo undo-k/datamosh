@@ -9,9 +9,10 @@ import (
 func Decimate(input []byte, startIndex uint, endIndex uint) []byte {
 	data := input[:]
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+
 	for idx := startIndex; idx < endIndex; idx++ {
-		if r.Float64()*1000000 < 10.0 {
-			b := data[idx]
+		if r.Float64()*1000 < 1.0 {
+			b := uint8(r.Uint32())
 			data[idx] = ((b ^ b) | (0x69 ^ b)) ^ uint8(r.Float32()*10)
 		}
 	}
@@ -23,15 +24,22 @@ func Quadratic(input []byte, startIndex uint, endIndex uint) []byte {
 	data := input[:]
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for idx := startIndex; idx < endIndex; idx++ {
-		if r.Float64()*1000000 < 10.0 {
-			data[idx] = (uint8(idx) * uint8(idx)) + (uint8(idx) * data[idx]) + data[idx]
+		if r.Float64()*1000 < 1.0 {
+			yIndex := (idx * idx) + (uint(data[idx]) * idx) + uint(data[idx])
+			yIndex = yIndex % endIndex
+			if yIndex < startIndex {
+				yIndex += startIndex
+			}
+			temp := data[idx]
+			data[idx] = data[yIndex]
+			data[yIndex] = temp
 		}
 	}
 
 	return data
 }
 
-func RotateSubslice(input []byte, startIndex uint, endIndex uint, displacement int) []byte {
+func ShiftSubslice(input []byte, startIndex uint, endIndex uint, displacement int) []byte {
 	data := input[:]
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	startIndex = uint(r.Intn(int(endIndex-startIndex)) + int(startIndex))

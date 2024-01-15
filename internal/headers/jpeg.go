@@ -1,8 +1,6 @@
 package headers
 
-import "fmt"
-
-func getJpegHeaders(data []byte) (uint, uint) {
+func getJpegBounds(data []byte) (uint, uint) {
 	//var soiIndex uint
 	//var appIndex uint
 	//var dqtIndex uint
@@ -27,7 +25,7 @@ func getJpegHeaders(data []byte) (uint, uint) {
 			//	fmt.Printf("Found DQT at %v\n", dqtIndex)
 			case 0xc0:
 				sofIndex = uint(idx + 3)
-				fmt.Printf("Found SOF0 at %v\n", sofIndex)
+				//fmt.Printf("Found SOF0 at %v\n", sofIndex)
 			//case 0xc4:
 			//
 			//	dhtIndex = uint(idx)
@@ -39,7 +37,7 @@ func getJpegHeaders(data []byte) (uint, uint) {
 			case 0xd9:
 
 				eoiIndex = uint(idx - 2)
-				fmt.Printf("Found EOI at %v\n", eoiIndex)
+				//fmt.Printf("Found EOI at %v\n", eoiIndex)
 			}
 		}
 	}
