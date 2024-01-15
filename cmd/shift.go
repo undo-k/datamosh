@@ -11,7 +11,7 @@ var shiftCmd = &cobra.Command{
 	Use:  "shift",
 	Args: cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		moshers.ShiftSubslice(data, startIndex, endIndex, displace)
+		moshers.ShiftSubslice(&data, startIndex, endIndex, displace)
 	},
 }
 

@@ -10,7 +10,7 @@ var decimateCmd = &cobra.Command{
 	Short: "just wrecks 0.1% of the bytes with nonsense (very dangerous)",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		moshers.Decimate(data, startIndex, endIndex)
+		moshers.Decimate(&data, startIndex, endIndex)
 	},
 }
 

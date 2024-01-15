@@ -10,7 +10,7 @@ var quadraticCmd = &cobra.Command{
 	Short: "byte swapping using quadratic function",
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
-		moshers.Quadratic(data, startIndex, endIndex)
+		moshers.Quadratic(&data, startIndex, endIndex)
 	},
 }
 
